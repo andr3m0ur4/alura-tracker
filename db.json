@@ -1,0 +1,50 @@
+{
+  "projetos": [
+    {
+      "id": 1,
+      "nome": "Alura Tracker 2.0"
+    },
+    {
+      "id": 2,
+      "nome": "Vue com API 2.0"
+    }
+  ],
+  "tarefas": [
+    {
+      "id": 1,
+      "descricao": "Configuração no ambiente",
+      "duracaoEmSegundos": 120,
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker 2.0"
+      }
+    },
+    {
+      "duracaoEmSegundos": 3,
+      "descricao": "Refatoração do vuex",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker 2.0"
+      },
+      "id": 2
+    },
+    {
+      "duracaoEmSegundos": 4,
+      "descricao": "Estudando padrões de projeto",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker 2.0"
+      },
+      "id": 3
+    },
+    {
+      "duracaoEmSegundos": 5,
+      "descricao": "Aula sobre Vue com Vuex",
+      "projeto": {
+        "id": 2,
+        "nome": "Vue com API 2.0"
+      },
+      "id": 4
+    }
+  ]
+}

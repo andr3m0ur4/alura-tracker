@@ -54,7 +54,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
   header {
     background: #0d3b66;
     width: 100%;
