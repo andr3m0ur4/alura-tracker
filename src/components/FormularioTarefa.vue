@@ -25,7 +25,7 @@
 import { TipoNotificacao } from "@/interfaces/INotificacao";
 import { key } from "@/store";
 import { NOTIFICAR } from "@/store/tipo-mutacoes";
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { useStore } from "vuex";
 import TemporizadorTarefa from "./TemporizadorTarefa.vue";
 
@@ -35,17 +35,16 @@ export default defineComponent({
   components: {
     TemporizadorTarefa
   },
-  data() {
-    return {
-      descricao: '',
-      idProjeto: ''
-    }
-  },
-  methods: {
-    salvarTarefa(tempoDecorrido: number) : void {
-      const projeto = this.projetos.find(projeto => projeto.id == this.idProjeto);
+  setup(props, { emit }) {
+    const store = useStore(key);
+    const descricao = ref('');
+    const idProjeto = ref('');
+    const projetos = computed(() => store.state.projeto.projetos);
+
+    const salvarTarefa = (tempoDecorrido: number) : void => {
+      const projeto = projetos.value.find(projeto => projeto.id == idProjeto.value);
       if (!projeto) {
-        this.store.commit(NOTIFICAR, {
+        store.commit(NOTIFICAR, {
           titulo: 'Ops!',
           texto: 'Selecione um projeto antes de finalizar a tarefa!',
           tipo: TipoNotificacao.FALHA
@@ -53,19 +52,19 @@ export default defineComponent({
         return;
       }
 
-      this.$emit('aoSalvarTarefa', {
+      emit('aoSalvarTarefa', {
         duracaoEmSegundos: tempoDecorrido,
-        descricao: this.descricao,
-        projeto: this.projetos.find(projeto => projeto.id == this.idProjeto)
+        descricao: descricao.value,
+        projeto: projetos.value.find(projeto => projeto.id == idProjeto.value)
       });
-      this.descricao = '';
+      descricao.value = '';
     }
-  },
-  setup() {
-    const store = useStore(key);
+
     return {
-      projetos: computed(() => store.state.projeto.projetos),
-      store
+      descricao,
+      idProjeto,
+      projetos,
+      salvarTarefa
     };
   }
 });
